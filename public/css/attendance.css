@@ -1,0 +1,11 @@
+.badge-st-present{background:rgba(102,143,134,.18);color:#3f6a61}
+.badge-st-absent{background:rgba(201,120,95,.18);color:#8f4a35}
+.badge-st-late{background:rgba(135,179,206,.28);color:#2f5f7d}
+.badge-st-excused{background:rgba(228,214,204,.8);color:#6a5646}
+.att-opt{--c:var(--r-clay);border:1px solid var(--r-clay);background:#fff;color:var(--r-dark);min-width:64px;font-weight:600}
+.btn-check:checked + .att-opt.st-present{background:var(--r-secondary);border-color:var(--r-secondary);color:#fff}
+.btn-check:checked + .att-opt.st-absent{background:var(--r-accent);border-color:var(--r-accent);color:#fff}
+.btn-check:checked + .att-opt.st-late{background:var(--r-primary);border-color:var(--r-primary);color:var(--r-dark)}
+.btn-check:checked + .att-opt.st-excused{background:var(--r-clay);border-color:#cdb9aa;color:var(--r-dark)}
+.btn-check:disabled + .att-opt{opacity:.55}
+.att-row .form-control{font-size:.85rem}
