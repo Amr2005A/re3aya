@@ -6,10 +6,14 @@
     ['route'=>'attendance.index','label'=>'تسجيل الحضور','can'=>['attendance.record','attendance.update','attendance.view-all','attendance.view-own'],'match'=>'attendance.index','icon'=>'✓'],
     ['route'=>'attendance.history','label'=>'سجل الحضور','can'=>['attendance.view-all','attendance.view-own','attendance.record','attendance.update'],'match'=>'attendance.history','icon'=>'🗓'],
     ['route'=>'attendance.report','label'=>'تقرير الحضور','can'=>['attendance.report'],'match'=>'attendance.report','icon'=>'📊'],
+    ['route'=>'notes.index','label'=>'الملاحظات','can'=>['notes.view-all','notes.view-own'],'match'=>'notes.*','icon'=>'📝'],
+    ['route'=>'circles.index','label'=>'الحلقات والأنشطة','can'=>['circles.view'],'match'=>'circles.*','icon'=>'◎'],
+    ['route'=>'points.index','label'=>'النقاط','can'=>['points.view'],'match'=>'points.*','icon'=>'★'],
     ['route'=>'supervisors.index','label'=>'المشرفون','can'=>['supervisors.view'],'match'=>'supervisors.*','icon'=>'🧭'],
     ['route'=>'assignments.index','label'=>'توزيع الطلاب','can'=>['supervisors.assign-students'],'match'=>'assignments.*','icon'=>'⇄'],
     ['route'=>'users.index','label'=>'المستخدمون','can'=>['users.view'],'match'=>'users.*','icon'=>'👥'],
     ['route'=>'working-days.edit','label'=>'أيام الدوام','can'=>['settings.view'],'match'=>'working-days.*','icon'=>'📅'],
+    ['route'=>'points-settings.edit','label'=>'إعدادات النقاط','can'=>['settings.view'],'match'=>'points-settings.*','icon'=>'⚙'],
     ['route'=>'lookups.index','label'=>'الصفوف والشعب','can'=>['settings.view'],'match'=>'lookups.*','icon'=>'⚙'],
   ];
   $u = auth()->user();

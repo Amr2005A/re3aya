@@ -10,7 +10,7 @@ class RegistrationAndSeedTest extends TestCase {
 
     public function test_default_db_seed_creates_owner_and_permissions(): void {
         $this->seed(); // DatabaseSeeder
-        $this->assertTrue(User::where('email', 'owner@riaya.test')->value('is_owner') == true);
+        $this->assertTrue(User::where('email', config('riaya.owner.email'))->value('is_owner') == true);
         $this->assertGreaterThan(40, Permission::count());
         $this->assertDatabaseHas('working_days', ['weekday' => 1, 'is_active' => true]);
     }

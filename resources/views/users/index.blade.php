@@ -3,6 +3,7 @@
 @section('breadcrumbs')<li class="breadcrumb-item"><a href="{{ route('dashboard') }}">الرئيسية</a></li><li class="breadcrumb-item active">المستخدمون</li>@endsection
 @section('actions')@can('create', App\Models\User::class)<a href="{{ route('users.create') }}" class="btn btn-primary">+ مستخدم جديد</a>@endcan @endsection
 @section('content')
+@if($pending)<div class="alert alert-warning py-2">لديك <strong>{{ $pending }}</strong> حساب بانتظار المراجعة. <a href="{{ route('users.index', ['active' => 0]) }}">عرضها</a> ثم فعّل الحساب وحدّد صلاحياته.</div>@endif
 <form class="row g-2 mb-3" method="GET">
   <div class="col-12 col-md-5"><input name="q" value="{{ request('q') }}" class="form-control" placeholder="بحث بالاسم أو البريد…"></div>
   <div class="col-6 col-md-3"><select name="active" class="form-select"><option value="">كل الحالات</option>

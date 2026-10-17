@@ -14,7 +14,8 @@ class UserController extends Controller {
             ->when($request->q, fn ($q, $s) => $q->where(fn ($w) => $w->where('name', 'like', "%$s%")->orWhere('email', 'like', "%$s%")->orWhere('username', 'like', "%$s%")))
             ->when($request->filled('active'), fn ($q) => $q->where('is_active', $request->boolean('active')))
             ->orderBy('name')->paginate(15)->withQueryString();
-        return view('users.index', compact('users'));
+        $pending = User::where('is_active', false)->whereNull('last_login_at')->count(); // طلبات تسجيل لم تُفعَّل بعد
+        return view('users.index', compact('users', 'pending'));
     }
     public function create() { Gate::authorize('create', User::class); return view('users.form', ['user' => new User()]); }
     public function store(SaveUserRequest $request, SaveUser $save) {

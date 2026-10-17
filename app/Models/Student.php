@@ -30,6 +30,11 @@ class Student extends Model {
         if ($u->supervisor && ($u->can('attendance.view-own') || $u->can('attendance.record') || $u->can('attendance.update'))) return $q->where('supervisor_id', $u->supervisor->id);
         return $q->whereRaw('1 = 0');
     }
+    /** الطلاب الذين يستطيع المستخدم إدارة نقاطهم: الكل لمن يرى كل الطلاب، وإلا طلاب مشرفه */
+    public function scopeManagedBy(Builder $q, User $u): Builder {
+        if ($u->is_owner || $u->can('students.view-all')) return $q;
+        return $u->supervisor ? $q->where('supervisor_id', $u->supervisor->id) : $q->whereRaw('1 = 0');
+    }
     public function scopeSearch(Builder $q, ?string $s): Builder {
         return $s ? $q->where(fn ($w) => $w->where('name','like',"%$s%")->orWhere('father_name','like',"%$s%")->orWhere('phone','like',"%$s%")) : $q;
     }

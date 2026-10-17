@@ -21,11 +21,15 @@
     @foreach(['اسم الأب'=>$student->father_name,'السكن'=>$student->address,'عمل الأب'=>$student->father_job,'الصف'=>$student->gradeLevel?->name,'الشعبة'=>$student->section?->name,'تاريخ التسجيل'=>$student->registered_at?->format('Y-m-d')] as $k => $v)
       <dt class="col-5 col-md-3 text-muted fw-normal">{{ $k }}</dt><dd class="col-7 col-md-9">{{ $v ?: '—' }}</dd>
     @endforeach</dl></div></div></div>
-  @foreach(['notes'=>'الملاحظات (المرحلة 6)','pts'=>'النقاط (المرحلة 7)','badges'=>'الأوسمة (المرحلة 8)','fin'=>'المالية (المرحلة 9)'] as $id => $l)
+  @foreach(['badges'=>'الأوسمة (المرحلة 8)','fin'=>'المالية (المرحلة 9)'] as $id => $l)
     <div class="tab-pane fade" id="t-{{ $id }}"><div class="card"><div class="card-body text-center text-muted py-5">{{ $l }} — ستُفعَّل هذه التبويبة في مرحلتها.</div></div></div>
   @endforeach
   <div class="tab-pane fade" id="t-att"><link href="{{ asset('css/attendance.css') }}" rel="stylesheet">
     @can('viewAttendance', $student)<x-attendance-summary :student="$student" />@else<div class="card"><div class="card-body text-center text-muted py-5">لا تملك صلاحية عرض حضور هذا الطالب.</div></div>@endcan</div>
+  <div class="tab-pane fade" id="t-notes">
+    @can('viewNotes', $student)<x-student-notes :student="$student" />@else<div class="card"><div class="card-body text-center text-muted py-5">لا تملك صلاحية عرض ملاحظات هذا الطالب.</div></div>@endcan</div>
+  <div class="tab-pane fade" id="t-pts"><link href="{{ asset('css/attendance.css') }}" rel="stylesheet">
+    @can('viewPoints', $student)<x-student-points :student="$student" />@else<div class="card"><div class="card-body text-center text-muted py-5">لا تملك صلاحية عرض نقاط هذا الطالب.</div></div>@endcan</div>
   <div class="tab-pane fade" id="t-tl"><div class="card"><div class="card-body">
     @forelse($timeline as $e)
       <div class="d-flex gap-3 mb-3"><div class="rounded-circle mt-1" style="width:10px;height:10px;background:var(--r-secondary);flex:none"></div>
@@ -33,4 +37,39 @@
     @empty<div class="text-center text-muted py-4">لا توجد أحداث بعد.</div>@endforelse
   </div></div></div>
 </div>
+@php
+    $defaultTab = '';
+
+    if ($errors->has('body')) {
+        $defaultTab = '#notes';
+    } elseif ($errors->hasAny([
+        'points',
+        'reason',
+        'criteria_id',
+        'reverse',
+    ])) {
+        $defaultTab = '#pts';
+    }
+@endphp
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash;
+    const defaultTab = @json($defaultTab);
+
+    const target = hash || defaultTab;
+
+    if (!target) {
+        return;
+    }
+
+    const tabButton = document.querySelector(
+        '[data-bs-target="#t-' + target.replace('#', '') + '"]'
+    );
+
+    if (tabButton) {
+        bootstrap.Tab.getOrCreateInstance(tabButton).show();
+    }
+});
+</script>
 @endsection

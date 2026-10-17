@@ -9,8 +9,6 @@ class User extends Authenticatable {
     protected $fillable = ['name','username','email','password','is_active'];
     protected $hidden = ['password','remember_token'];
     // is_owner غير قابل للتعبئة الجماعية عمداً
-    protected function casts(): array {
-        return ['password'=>'hashed','is_active'=>'boolean','is_owner'=>'boolean','last_login_at'=>'datetime'];
-    }
+    protected $casts = ['password' => 'hashed', 'is_active' => 'boolean', 'is_owner' => 'boolean', 'last_login_at' => 'datetime'];
     public function supervisor() { return $this->hasOne(Supervisor::class); }
 }

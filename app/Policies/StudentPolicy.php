@@ -12,4 +12,10 @@ class StudentPolicy {
     public function viewAttendance(User $u, Student $s): bool {
         return $u->is_owner || $u->can('attendance.view-all') || ($u->can('attendance.view-own') && $u->supervisor && $s->supervisor_id === $u->supervisor->id);
     }
+    public function viewNotes(User $u, Student $s): bool {
+        return $u->is_owner || $u->can('notes.view-all') || ($u->can('notes.view-own') && $u->supervisor && $s->supervisor_id === $u->supervisor->id);
+    }
+    public function viewPoints(User $u, Student $s): bool {
+        return ($u->is_owner || $u->can('points.view')) && ($u->is_owner || $u->can('students.view-all') || ($u->supervisor && $s->supervisor_id === $u->supervisor->id));
+    }
 }

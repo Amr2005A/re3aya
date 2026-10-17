@@ -8,6 +8,7 @@
 <div class="card w-100" style="max-width:400px"><div class="card-body p-4">
   <h1 class="h3 fw-bold text-center mb-1" style="color:var(--r-dark)">رِعاية</h1>
   <p class="text-center text-muted mb-4">تسجيل الدخول إلى لوحة الإدارة</p>
+  @if(session('status'))<div class="alert alert-success py-2 small">{{ session('status') }}</div>@endif
   <form method="POST" action="{{ route('login') }}">@csrf
     <div class="mb-3"><label class="form-label">البريد أو اسم المستخدم</label>
       <input name="login" value="{{ old('login') }}" class="form-control @error('login') is-invalid @enderror" autofocus required>
@@ -16,4 +17,5 @@
     <div class="form-check mb-3"><input type="checkbox" class="form-check-input" name="remember" id="rm"><label class="form-check-label" for="rm">تذكّرني</label></div>
     <button class="btn btn-primary w-100 py-2">دخول</button>
   </form>
+  @if(config('riaya.registration_enabled'))<div class="text-center mt-3 small">ليس لديك حساب؟ <a href="{{ route('register') }}">طلب حساب جديد</a></div>@endif
 </div></div></body></html>
